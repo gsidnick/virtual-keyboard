@@ -1,32 +1,19 @@
 class Component {
   constructor(tag, className, children, parent) {
     this.node = document.createElement(tag);
-
-    if (className !== undefined && className !== '') {
-      const classes = className.split(' ');
-      this.node.classList.add(...classes);
-    }
-
-    if (children !== undefined) {
-      if (children instanceof Component) {
-        this.node.append(children.node);
-      } else {
-        this.node.append(children);
-      }
-    }
-
-    if (parent !== undefined) {
-      parent.node.append(this.node);
-    }
+    if (className !== undefined && className !== '') this.node.classList.add(...className.split(' '));
+    if (children !== undefined) this.add(children);
+    if (parent !== undefined) parent.node.append(this.node);
   }
 
-  append(node) {
-    if (node instanceof Component) {
-      this.node.append(node.node);
-    } else {
-      this.node.append(node);
-    }
+  append(...args) {
+    [...args].forEach((node) => this.add(node));
     return this.node;
+  }
+
+  add(node) {
+    if (node instanceof Component) this.node.append(node.node);
+    if (node instanceof HTMLElement || typeof node === 'string') this.node.append(node);
   }
 
   on(event, callback) {
