@@ -1,0 +1,16 @@
+.textbox {
+    font-size: 0;
+}
+
+.textbox__field {
+    width: 900px;
+    height: 160px;
+    font-family: Inter, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    border: 1px solid var(--color-textbox-border);
+    border-radius: 3px;
+    outline: none;
+    resize: vertical;
+    padding: 10px;
+}
