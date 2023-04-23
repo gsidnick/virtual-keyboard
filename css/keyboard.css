@@ -1,0 +1,45 @@
+.keyboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 50px);
+  row-gap: 5px;
+  background-color: var(--color-keyboard-background);
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.keyboard__row {
+  display: grid;
+  column-gap: 5px;
+}
+
+.keyboard__row_1 {
+  grid-template-columns: repeat(13, 50px) auto;
+}
+.keyboard__row_2 {
+  grid-template-columns: 85px repeat(13, 50px) auto;
+}
+
+.keyboard__row_3 {
+  grid-template-columns: 95px repeat(11, 50px) auto;
+}
+
+.keyboard__row_4 {
+  grid-template-columns: 122px repeat(10, 50px) auto;
+}
+
+.keyboard__row_5 {
+  grid-template-columns: repeat(3, 50px) auto repeat(5, 50px);
+}
+
+.keyboard__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px;
+}
+
+.keyboard__group .key {
+  height: 23px;
+}
