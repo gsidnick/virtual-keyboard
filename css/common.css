@@ -11,10 +11,13 @@ body {
 
 .wrapper {
   width: 1000px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.main {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 2fr;
   row-gap: 20px;
-  margin: 0 auto;
-  padding: 50px;
 }
