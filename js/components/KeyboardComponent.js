@@ -96,36 +96,45 @@ class KeyboardComponent extends Component {
 
   initializeKeysEvent() {
     this.keyComponents.forEach((component) => {
-      switch (component.key.keyCode) {
-        case 8:
-          component.on('click', () => console.log(component.key.keyCode));
+      switch (component.key.code) {
+        case 'ShiftLeft':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 9:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'ShiftRight':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 46:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'AltLeft':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 20:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'AltRight':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 13:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'ControlLeft':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 16:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'ControlRight':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 17:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'Backspace':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 18:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'Tab':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 91:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'Delete':
+          component.on('click', () => console.log(component.key.code));
           break;
-        case 32:
-          component.on('click', () => console.log(component.key.keyCode));
+        case 'CapsLock':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'Enter':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'Space':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'Meta':
+          component.on('click', () => console.log(component.key.code));
           break;
         case 'ArrowLeft':
           component.on('click', () => console.log(component.key.code));
@@ -145,5 +154,4 @@ class KeyboardComponent extends Component {
     });
   }
 }
-
 export default KeyboardComponent;
