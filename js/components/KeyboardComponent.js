@@ -9,6 +9,7 @@ class KeyboardComponent extends Component {
       shift: false,
       alt: false,
       ctrl: false,
+      capsLock: false,
     };
     this.keyComponents = [];
     this.keysData = keysData;
@@ -114,15 +115,15 @@ class KeyboardComponent extends Component {
   }
 
   capsLockHandler(component) {
-    this.state.shift = !this.state.shift;
+    this.state.capsLock = !this.state.capsLock;
     this.renderKeys();
     component.togglePress();
-    console.log('Shift', this.state.shift);
+    console.log('Caps Lock', this.state.capsLock);
   }
 
   renderKeys() {
     this.keyComponents.forEach((component) => {
-      component.toggleShift();
+      component.toggleShift(this.state.shift, this.state.capsLock);
     });
   }
 

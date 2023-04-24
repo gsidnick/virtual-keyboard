@@ -9,6 +9,7 @@ class KeyComponent extends Component {
     super('button', 'key');
     this.current = null;
     this.key = null;
+    this.capsed = false;
     this.shifted = false;
     this.pressed = false;
     this.locale = EN;
@@ -33,8 +34,9 @@ class KeyComponent extends Component {
     this.setCurrentKey();
   }
 
-  toggleShift() {
-    this.shifted = !this.shifted;
+  toggleShift(shift, capsLock) {
+    this.shifted = shift;
+    this.capsed = capsLock;
     this.toggleShiftStyle();
     this.toggleShiftKey();
     this.setCurrentKey();
@@ -51,9 +53,17 @@ class KeyComponent extends Component {
   toggleShiftKey() {
     if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
       if (this.shifted) {
-        this.node.innerHTML = this.key[this.locale].keyShift;
-      } else {
-        this.node.innerHTML = this.key[this.locale].keyBase;
+        if (this.capsed) {
+          this.node.innerHTML = this.key[this.locale].keyBase;
+        } else {
+          this.node.innerHTML = this.key[this.locale].keyShift;
+        }
+      } else if (!this.shifted) {
+        if (this.capsed) {
+          this.node.innerHTML = this.key[this.locale].keyShift;
+        } else {
+          this.node.innerHTML = this.key[this.locale].keyBase;
+        }
       }
     }
   }
@@ -72,8 +82,23 @@ class KeyComponent extends Component {
   }
 
   setCurrentKey() {
-    if ((isLetterKey(this.locale, this.key[this.locale].keyBase)
-      || isSymbolKey(this.locale, this.key[this.locale].keyBase))
+    if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
+      if (this.shifted) {
+        if (this.capsed) {
+          this.current = this.key[this.locale].keyBase;
+        } else {
+          this.current = this.key[this.locale].keyShift;
+        }
+      } else if (!this.shifted) {
+        if (this.capsed) {
+          this.current = this.key[this.locale].keyShift;
+        } else {
+          this.current = this.key[this.locale].keyBase;
+        }
+      }
+    }
+
+    if (isSymbolKey(this.locale, this.key[this.locale].keyBase)
       && !isSpecialKey(this.key[this.locale].keyShift)) {
       if (this.shifted) {
         this.current = this.key[this.locale].keyShift;
