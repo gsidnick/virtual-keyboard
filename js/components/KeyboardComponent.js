@@ -94,26 +94,56 @@ class KeyboardComponent extends Component {
     this.keyComponents.push(component);
   }
 
+  shiftHandler(component) {
+    this.state.shift = !this.state.shift;
+    component.togglePress();
+    console.log('Shift', this.state.shift);
+  }
+
+  altHandler(component) {
+    this.state.alt = !this.state.alt;
+    component.togglePress();
+    console.log('Alt', this.state.alt);
+  }
+
+  ctrlHandler(component) {
+    this.state.ctrl = !this.state.ctrl;
+    component.togglePress();
+    console.log('Control', this.state.ctrl);
+  }
+
+  capsLockHandler(component) {
+    this.state.shift = !this.state.shift;
+    component.togglePress();
+    console.log('Shift', this.state.shift);
+  }
+
   initializeKeysEvent() {
     this.keyComponents.forEach((component) => {
       switch (component.key.code) {
         case 'ShiftLeft':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.shiftHandler.bind(this, component));
+          component.on('mouseup', this.shiftHandler.bind(this, component));
           break;
         case 'ShiftRight':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.shiftHandler.bind(this, component));
+          component.on('mouseup', this.shiftHandler.bind(this, component));
           break;
         case 'AltLeft':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.altHandler.bind(this, component));
+          component.on('mouseup', this.altHandler.bind(this, component));
           break;
         case 'AltRight':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.altHandler.bind(this, component));
+          component.on('mouseup', this.altHandler.bind(this, component));
           break;
         case 'ControlLeft':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.ctrlHandler.bind(this, component));
+          component.on('mouseup', this.ctrlHandler.bind(this, component));
           break;
         case 'ControlRight':
-          component.on('click', () => console.log(component.key.code));
+          component.on('mousedown', this.ctrlHandler.bind(this, component));
+          component.on('mouseup', this.ctrlHandler.bind(this, component));
           break;
         case 'Backspace':
           component.on('click', () => console.log(component.key.code));
@@ -125,7 +155,7 @@ class KeyboardComponent extends Component {
           component.on('click', () => console.log(component.key.code));
           break;
         case 'CapsLock':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', this.capsLockHandler.bind(this, component));
           break;
         case 'Enter':
           component.on('click', () => console.log(component.key.code));
