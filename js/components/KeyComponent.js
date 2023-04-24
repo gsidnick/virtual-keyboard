@@ -29,7 +29,6 @@ class KeyComponent extends Component {
       const keyBaseComponent = new Component('span', 'key__base', this.key[this.locale].keyBase);
       this.append(keyShiftComponent, keyBaseComponent);
     }
-    // this.on('click', this.clickHandler.bind(this));
   }
 
   toggleShift() {
@@ -68,10 +67,6 @@ class KeyComponent extends Component {
       this.node.classList.remove('key_pressed');
     }
   }
-
-  // clickHandler() {
-  //   this.togglePress();
-  // }
 }
 
 export default KeyComponent;
