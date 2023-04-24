@@ -72,14 +72,20 @@ class KeyComponent extends Component {
   }
 
   setCurrentKey() {
-    if (isLetterKey(this.locale, this.key[this.locale].keyBase)
-      || isSymbolKey(this.locale, this.key[this.locale].keyBase)) {
+    if ((isLetterKey(this.locale, this.key[this.locale].keyBase)
+      || isSymbolKey(this.locale, this.key[this.locale].keyBase))
+      && !isSpecialKey(this.key[this.locale].keyShift)) {
       if (this.shifted) {
         this.current = this.key[this.locale].keyShift;
       } else {
         this.current = this.key[this.locale].keyBase;
       }
     }
+    if (this.key.code === 'Space'
+      || this.key.code === 'ArrowUp'
+      || this.key.code === 'ArrowLeft'
+      || this.key.code === 'ArrowRight'
+      || this.key.code === 'ArrowDown') this.current = this.key[this.locale].keyBase;
   }
 }
 
