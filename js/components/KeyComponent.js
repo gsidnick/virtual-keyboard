@@ -1,34 +1,37 @@
 import Component from './Component.js';
-import { keysEn } from '../data/keys.js';
+import { isLetterKey, isSpecialKey } from '../utils/check.js';
+
+const EN = 'en';
+const RU = 'ru';
 
 class KeyComponent extends Component {
   constructor(key) {
     super('button', 'key');
+    this.key = null;
     this.shifted = null;
     this.pressed = null;
-    this.alphabet = keysEn.alphabet;
+    this.locale = EN;
     this.toggleShift();
     this.togglePress();
     this.create(key);
   }
 
   create(key) {
-    if (Array.isArray(key)) {
-      const [keyShift, keyBase] = key;
-      this.key = { keyShift, keyBase };
-      if (this.alphabet.split('').includes(key[0].toLowerCase())) {
-        if (this.shifted) {
-          this.append(this.key.keyShift);
-        } else {
-          this.append(this.key.keyBase);
-        }
+    this.key = { ...key };
+    if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
+      if (this.shifted) {
+        this.append(this.key[this.locale].keyShift);
       } else {
-        const keyShiftComponent = new Component('span', 'key__shift', this.key.keyShift);
-        const keyBaseComponent = new Component('span', 'key__base', this.key.keyBase);
-        this.append(keyShiftComponent, keyBaseComponent);
+        this.append(this.key[this.locale].keyBase);
       }
+    } else if (isSpecialKey(this.key[this.locale].keyShift)) {
+      this.append(this.key[this.locale].keyBase);
+    } else {
+      const keyShiftComponent = new Component('span', 'key__shift', this.key[this.locale].keyShift);
+      const keyBaseComponent = new Component('span', 'key__base', this.key[this.locale].keyBase);
+      this.append(keyShiftComponent, keyBaseComponent);
     }
-    if (typeof key === 'string') this.append(key);
+    // this.on('click', this.clickHandler.bind(this));
   }
 
   toggleShift() {
@@ -53,6 +56,7 @@ class KeyComponent extends Component {
       this.pressed = false;
     } else {
       this.pressed = !this.pressed;
+      this.setPressStyle();
     }
   }
 
@@ -63,6 +67,10 @@ class KeyComponent extends Component {
       this.node.classList.remove('key_pressed');
     }
   }
+
+  // clickHandler() {
+  //   this.togglePress();
+  // }
 }
 
 export default KeyComponent;

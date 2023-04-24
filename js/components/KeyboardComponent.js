@@ -1,82 +1,131 @@
 import KeyComponent from './KeyComponent.js';
 import Component from './Component.js';
-import { keysEn } from '../data/keys.js';
+import keysData from '../data/keys.js';
 
 class KeyboardComponent extends Component {
   constructor() {
     super('section', 'keyboard');
-    this.keys = keysEn;
-    this.keyboardRow1 = new Component('div', 'keyboard__row keyboard__row_1');
-    this.keyboardRow2 = new Component('div', 'keyboard__row keyboard__row_2');
-    this.keyboardRow3 = new Component('div', 'keyboard__row keyboard__row_3');
-    this.keyboardRow4 = new Component('div', 'keyboard__row keyboard__row_4');
-    this.keyboardRow5 = new Component('div', 'keyboard__row keyboard__row_5');
-    this.renderRow1();
-    this.renderRow2();
-    this.renderRow3();
-    this.renderRow4();
-    this.renderRow5();
+    this.keyComponents = [];
+    this.keysData = keysData;
+    this.renderRows();
+    this.initializeKeysEvent();
+  }
+
+  renderRows() {
     const rows = [
-      this.keyboardRow1,
-      this.keyboardRow2,
-      this.keyboardRow3,
-      this.keyboardRow4,
-      this.keyboardRow5];
+      this.renderRow1(),
+      this.renderRow2(),
+      this.renderRow3(),
+      this.renderRow4(),
+      this.renderRow5(),
+    ];
     this.append(...rows);
   }
 
   renderRow1() {
-    const additionKey = [
-      ['*', '8'],
-      ['(', '9'],
-      [')', '0'],
-      ['_', '-'],
-      ['+', '='],
-      'Backspace',
-    ];
-    const keyPart1 = this.keys.row1.map((key) => new KeyComponent(key));
-    const keyPart2 = additionKey.map((key) => new KeyComponent(key));
-    this.keyboardRow1.append(...keyPart1, ...keyPart2);
+    const keyboardRow1 = new Component('div', 'keyboard__row keyboard__row_1');
+    const keys = this.keysData.row1.map((key) => {
+      const keyComponent = new KeyComponent(key);
+      this.addKeyComponent(keyComponent);
+      return keyComponent;
+    });
+    keyboardRow1.append(...keys);
+    return keyboardRow1;
   }
 
   renderRow2() {
-    const tab = new KeyComponent('Tab');
-    const row2 = this.keys.row2.map((key) => new KeyComponent(key));
-    const del = new KeyComponent('Del');
-    this.keyboardRow2.append(tab, ...row2, del);
+    const keyboardRow2 = new Component('div', 'keyboard__row keyboard__row_2');
+    const keys = this.keysData.row2.map((key) => {
+      const keyComponent = new KeyComponent(key);
+      this.addKeyComponent(keyComponent);
+      return keyComponent;
+    });
+    keyboardRow2.append(...keys);
+    return keyboardRow2;
   }
 
   renderRow3() {
-    const capsLock = new KeyComponent('Caps Lock');
-    const row3 = this.keys.row3.map((key) => new KeyComponent(key));
-    const enter = new KeyComponent('Enter');
-    this.keyboardRow3.append(capsLock, ...row3, enter);
+    const keyboardRow3 = new Component('div', 'keyboard__row keyboard__row_3');
+    const keys = this.keysData.row3.map((key) => {
+      const keyComponent = new KeyComponent(key);
+      this.addKeyComponent(keyComponent);
+      return keyComponent;
+    });
+    keyboardRow3.append(...keys);
+    return keyboardRow3;
   }
 
   renderRow4() {
-    const shiftLeft = new KeyComponent('Shift');
-    const row4 = this.keys.row4.map((key) => new KeyComponent(key));
-    const shiftRight = new KeyComponent('Shift');
-    this.keyboardRow4.append(shiftLeft, ...row4, shiftRight);
+    const keyboardRow4 = new Component('div', 'keyboard__row keyboard__row_4');
+    const keys = this.keysData.row4.map((key) => {
+      const keyComponent = new KeyComponent(key);
+      this.addKeyComponent(keyComponent);
+      return keyComponent;
+    });
+    keyboardRow4.append(...keys);
+    return keyboardRow4;
   }
 
   renderRow5() {
-    const ctrlLeft = new KeyComponent('Ctrl');
-    const win = new KeyComponent('Win');
-    const altLeft = new KeyComponent('Alt');
-    const space = new KeyComponent('');
-    const altRight = new KeyComponent('Alt');
-    const ctrlRight = new KeyComponent('Ctrl');
-    const arrowLeft = new KeyComponent('◄');
-    const arrowRight = new KeyComponent('►');
-    const arrowUp = new KeyComponent('▲');
-    const arrowDown = new KeyComponent('▼');
+    const keyboardRow5 = new Component('div', 'keyboard__row keyboard__row_5');
+    const keys = this.keysData.row5.slice(0, -4).map((key) => {
+      const keyComponent = new KeyComponent(key);
+      this.addKeyComponent(keyComponent);
+      return keyComponent;
+    });
+    const arrows = this.keysData.row5.slice(-4);
+    const arrowLeft = new KeyComponent(arrows[0]);
+    const arrowUp = new KeyComponent(arrows[1]);
+    const arrowDown = new KeyComponent(arrows[2]);
+    const arrowRight = new KeyComponent(arrows[3]);
+    this.keyComponents = [...this.keyComponents, arrowLeft, arrowUp, arrowDown, arrowRight];
     const arrowGroup = new Component('div', 'keyboard__group');
     arrowGroup.append(arrowUp, arrowDown);
-    const keys = [
-      ctrlLeft, win, altLeft, space, altRight, ctrlRight, arrowLeft, arrowGroup, arrowRight,
-    ];
-    this.keyboardRow5.append(...keys);
+    keyboardRow5.append(...keys, arrowLeft, arrowGroup, arrowRight);
+    return keyboardRow5;
+  }
+
+  addKeyComponent(component) {
+    this.keyComponents.push(component);
+  }
+
+  initializeKeysEvent() {
+    this.keyComponents.forEach((component) => {
+      switch (component.key.keyCode) {
+        case 8:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 9:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 46:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 20:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 13:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 16:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 17:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 18:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 91:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        case 32:
+          component.on('click', () => console.log(component.key.keyCode));
+          break;
+        default:
+          break;
+      }
+    });
   }
 }
 
