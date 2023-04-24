@@ -122,6 +122,18 @@ class KeyboardComponent extends Component {
         case 32:
           component.on('click', () => console.log(component.key.keyCode));
           break;
+        case 'ArrowLeft':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'ArrowRight':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'ArrowUp':
+          component.on('click', () => console.log(component.key.code));
+          break;
+        case 'ArrowDown':
+          component.on('click', () => console.log(component.key.code));
+          break;
         default:
           break;
       }
