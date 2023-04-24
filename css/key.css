@@ -36,7 +36,7 @@
   background-color: var(--color-key-pressed-background);
 }
 
-.key_pressed:hovered {
+.key_pressed:hover {
   background-color: var(--color-key-hovered-background);
 }
 
