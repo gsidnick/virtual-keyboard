@@ -1,5 +1,5 @@
 import Component from './Component.js';
-import { isLetterKey, isSpecialKey } from '../utils/check.js';
+import { isLetterKey, isSpecialKey, isSymbolKey } from '../utils/check.js';
 
 const EN = 'en';
 const RU = 'ru';
@@ -7,6 +7,7 @@ const RU = 'ru';
 class KeyComponent extends Component {
   constructor(key) {
     super('button', 'key');
+    this.current = '';
     this.key = null;
     this.shifted = false;
     this.pressed = false;
@@ -29,12 +30,14 @@ class KeyComponent extends Component {
       const keyBaseComponent = new Component('span', 'key__base', this.key[this.locale].keyBase);
       this.append(keyShiftComponent, keyBaseComponent);
     }
+    this.setCurrentKey();
   }
 
   toggleShift() {
     this.shifted = !this.shifted;
     this.toggleShiftStyle();
     this.toggleShiftKey();
+    this.setCurrentKey();
   }
 
   toggleShiftStyle() {
@@ -65,6 +68,17 @@ class KeyComponent extends Component {
       this.node.classList.add('key_pressed');
     } else {
       this.node.classList.remove('key_pressed');
+    }
+  }
+
+  setCurrentKey() {
+    if (isLetterKey(this.locale, this.key[this.locale].keyBase)
+      || isSymbolKey(this.locale, this.key[this.locale].keyBase)) {
+      if (this.shifted) {
+        this.current = this.key[this.locale].keyShift;
+      } else {
+        this.current = this.key[this.locale].keyBase;
+      }
     }
   }
 }
