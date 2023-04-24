@@ -8,11 +8,9 @@ class KeyComponent extends Component {
   constructor(key) {
     super('button', 'key');
     this.key = null;
-    this.shifted = null;
-    this.pressed = null;
+    this.shifted = false;
+    this.pressed = false;
     this.locale = EN;
-    this.toggleShift();
-    this.togglePress();
     this.create(key);
   }
 
@@ -35,15 +33,12 @@ class KeyComponent extends Component {
   }
 
   toggleShift() {
-    if (this.shifted === null) {
-      this.shifted = false;
-    } else {
-      this.shifted = !this.shifted;
-      this.setShiftStyle();
-    }
+    this.shifted = !this.shifted;
+    this.toggleShiftStyle();
+    this.toggleShiftKey();
   }
 
-  setShiftStyle() {
+  toggleShiftStyle() {
     if (this.shifted) {
       this.node.classList.add('key_shifted');
     } else {
@@ -51,16 +46,22 @@ class KeyComponent extends Component {
     }
   }
 
-  togglePress() {
-    if (this.pressed === null) {
-      this.pressed = false;
-    } else {
-      this.pressed = !this.pressed;
-      this.setPressStyle();
+  toggleShiftKey() {
+    if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
+      if (this.shifted) {
+        this.node.innerHTML = this.key[this.locale].keyShift;
+      } else {
+        this.node.innerHTML = this.key[this.locale].keyBase;
+      }
     }
   }
 
-  setPressStyle() {
+  togglePress() {
+    this.pressed = !this.pressed;
+    this.togglePressStyle();
+  }
+
+  togglePressStyle() {
     if (this.pressed) {
       this.node.classList.add('key_pressed');
     } else {

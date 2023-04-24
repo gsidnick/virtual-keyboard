@@ -96,6 +96,7 @@ class KeyboardComponent extends Component {
 
   shiftHandler(component) {
     this.state.shift = !this.state.shift;
+    this.renderKeys();
     component.togglePress();
     console.log('Shift', this.state.shift);
   }
@@ -114,8 +115,15 @@ class KeyboardComponent extends Component {
 
   capsLockHandler(component) {
     this.state.shift = !this.state.shift;
+    this.renderKeys();
     component.togglePress();
     console.log('Shift', this.state.shift);
+  }
+
+  renderKeys() {
+    this.keyComponents.forEach((component) => {
+      component.toggleShift();
+    });
   }
 
   initializeKeysEvent() {
@@ -146,39 +154,40 @@ class KeyboardComponent extends Component {
           component.on('mouseup', this.ctrlHandler.bind(this, component));
           break;
         case 'Backspace':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'Tab':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'Delete':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'CapsLock':
           component.on('click', this.capsLockHandler.bind(this, component));
           break;
         case 'Enter':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'Space':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'Meta':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'ArrowLeft':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'ArrowRight':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'ArrowUp':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         case 'ArrowDown':
-          component.on('click', () => console.log(component.key.code));
+          component.on('click', () => console.log(component));
           break;
         default:
+          component.on('click', () => console.log(component));
           break;
       }
     });
