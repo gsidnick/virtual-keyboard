@@ -17,6 +17,7 @@ class App {
     const textboxWrapper = new TextboxWrapperComponent();
     const textbox = new TextboxComponent();
     const keyboard = new KeyboardComponent();
+    keyboard.textbox = textbox;
     wrapper.append(header, main.append(textboxWrapper.append(textbox), keyboard));
     if (this.body !== null) this.body.append(wrapper.node);
   }

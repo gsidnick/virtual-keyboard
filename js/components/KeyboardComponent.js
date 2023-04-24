@@ -11,6 +11,7 @@ class KeyboardComponent extends Component {
       ctrl: false,
       capsLock: false,
     };
+    this.textbox = null;
     this.keyComponents = [];
     this.keysData = keysData;
     this.renderRows();
@@ -121,6 +122,18 @@ class KeyboardComponent extends Component {
     console.log('Caps Lock', this.state.capsLock);
   }
 
+  tabHandler() {
+    this.textbox.setValue('\t');
+  }
+
+  enterHandler() {
+    this.textbox.setValue('\n');
+  }
+
+  symbolHandler(component) {
+    this.textbox.setValue(component.current);
+  }
+
   renderKeys() {
     this.keyComponents.forEach((component) => {
       component.toggleShift(this.state.shift, this.state.capsLock);
@@ -158,7 +171,7 @@ class KeyboardComponent extends Component {
           component.on('click', () => console.log(component));
           break;
         case 'Tab':
-          component.on('click', () => console.log(component));
+          component.on('click', this.tabHandler.bind(this));
           break;
         case 'Delete':
           component.on('click', () => console.log(component));
@@ -167,28 +180,28 @@ class KeyboardComponent extends Component {
           component.on('click', this.capsLockHandler.bind(this, component));
           break;
         case 'Enter':
-          component.on('click', () => console.log(component));
+          component.on('click', this.enterHandler.bind(this));
           break;
         case 'Space':
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
         case 'Meta':
           component.on('click', () => console.log(component));
           break;
         case 'ArrowLeft':
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
         case 'ArrowRight':
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
         case 'ArrowUp':
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
         case 'ArrowDown':
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
         default:
-          component.on('click', () => console.log(component));
+          component.on('click', this.symbolHandler.bind(this, component));
           break;
       }
     });
