@@ -695,11 +695,11 @@ const keys = {
     {
       en: {
         keyShift: null,
-        keyBase: '',
+        keyBase: ' ',
       },
       ru: {
         keyShift: null,
-        keyBase: '',
+        keyBase: ' ',
       },
       keyCode: 32,
       code: 'Space',
