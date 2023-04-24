@@ -7,7 +7,7 @@ const RU = 'ru';
 class KeyComponent extends Component {
   constructor(key) {
     super('button', 'key');
-    this.current = '';
+    this.current = null;
     this.key = null;
     this.shifted = false;
     this.pressed = false;
