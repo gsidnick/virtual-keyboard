@@ -726,7 +726,7 @@ const keys = {
         keyBase: 'Ctrl',
       },
       keyCode: 17,
-      code: 'CtrlRight',
+      code: 'ControlRight',
     },
     {
       en: {
