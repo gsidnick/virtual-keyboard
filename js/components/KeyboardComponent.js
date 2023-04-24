@@ -5,6 +5,11 @@ import keysData from '../data/keys.js';
 class KeyboardComponent extends Component {
   constructor() {
     super('section', 'keyboard');
+    this.state = {
+      shift: false,
+      alt: false,
+      ctrl: false,
+    };
     this.keyComponents = [];
     this.keysData = keysData;
     this.renderRows();
