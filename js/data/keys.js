@@ -678,7 +678,7 @@ const keys = {
         keyBase: 'Win',
       },
       keyCode: 91,
-      code: 'Meta',
+      code: 'MetaLeft',
     },
     {
       en: {
