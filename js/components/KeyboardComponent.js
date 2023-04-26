@@ -7,8 +7,6 @@ class KeyboardComponent extends Component {
     super('section', 'keyboard');
     this.state = {
       shift: false,
-      alt: false,
-      ctrl: false,
       capsLock: false,
     };
     this.textbox = null;
@@ -101,18 +99,6 @@ class KeyboardComponent extends Component {
     this.renderKeys();
     component.togglePress();
     console.log('Shift', this.state.shift);
-  }
-
-  altHandler(component) {
-    this.state.alt = !this.state.alt;
-    component.togglePress();
-    console.log('Alt', this.state.alt);
-  }
-
-  ctrlHandler(component) {
-    this.state.ctrl = !this.state.ctrl;
-    component.togglePress();
-    console.log('Control', this.state.ctrl);
   }
 
   capsLockHandler(component) {
