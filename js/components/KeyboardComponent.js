@@ -10,10 +10,17 @@ class KeyboardComponent extends Component {
       capsLock: false,
     };
     this.textbox = null;
-    this.keyComponents = [];
+    this.keyComponents = {};
     this.keysData = keysData;
     this.renderRows();
     this.initializeKeysEvent();
+    this.initializeKeydownEvent();
+    this.initializeKeyupEvents();
+    window.addEventListener('blur', () => {
+      Object.keys(this.keyComponents).forEach((key) => {
+        this.keyComponents[key].unpress();
+      });
+    });
   }
 
   renderRows() {
@@ -83,7 +90,10 @@ class KeyboardComponent extends Component {
     const arrowUp = new KeyComponent(arrows[1]);
     const arrowDown = new KeyComponent(arrows[2]);
     const arrowRight = new KeyComponent(arrows[3]);
-    this.keyComponents = [...this.keyComponents, arrowLeft, arrowUp, arrowDown, arrowRight];
+    this.keyComponents[arrowLeft.key.code] = arrowLeft;
+    this.keyComponents[arrowUp.key.code] = arrowUp;
+    this.keyComponents[arrowDown.key.code] = arrowDown;
+    this.keyComponents[arrowRight.key.code] = arrowRight;
     const arrowGroup = new Component('div', 'keyboard__group');
     arrowGroup.append(arrowUp, arrowDown);
     keyboardRow5.append(...keys, arrowLeft, arrowGroup, arrowRight);
@@ -91,7 +101,7 @@ class KeyboardComponent extends Component {
   }
 
   addKeyComponent(component) {
-    this.keyComponents.push(component);
+    this.keyComponents[component.key.code] = component;
   }
 
   shiftHandler(component) {
@@ -129,14 +139,16 @@ class KeyboardComponent extends Component {
   }
 
   renderKeys() {
-    this.keyComponents.forEach((component) => {
+    Object.keys(this.keyComponents).forEach((key) => {
+      const component = this.keyComponents[key];
       component.toggleShift(this.state.shift, this.state.capsLock);
     });
   }
 
   initializeKeysEvent() {
-    this.keyComponents.forEach((component) => {
-      switch (component.key.code) {
+    Object.keys(this.keyComponents).forEach((key) => {
+      const component = this.keyComponents[key];
+      switch (key) {
         case 'ShiftLeft':
           component.on('mousedown', this.shiftHandler.bind(this, component));
           component.on('mouseup', this.shiftHandler.bind(this, component));
@@ -146,38 +158,34 @@ class KeyboardComponent extends Component {
           component.on('mouseup', this.shiftHandler.bind(this, component));
           break;
         case 'AltLeft':
-          component.on('mousedown', this.altHandler.bind(this, component));
-          component.on('mouseup', this.altHandler.bind(this, component));
+          component.on('click', () => console.log(component));
           break;
         case 'AltRight':
-          component.on('mousedown', this.altHandler.bind(this, component));
-          component.on('mouseup', this.altHandler.bind(this, component));
+          component.on('click', () => console.log(component));
           break;
         case 'ControlLeft':
-          component.on('mousedown', this.ctrlHandler.bind(this, component));
-          component.on('mouseup', this.ctrlHandler.bind(this, component));
+          component.on('click', () => console.log(component));
           break;
         case 'ControlRight':
-          component.on('mousedown', this.ctrlHandler.bind(this, component));
-          component.on('mouseup', this.ctrlHandler.bind(this, component));
+          component.on('click', () => console.log(component));
           break;
         case 'Backspace':
-          component.on('click', this.backspaceHandler.bind(this));
+          component.on('mousedown', this.backspaceHandler.bind(this));
           break;
         case 'Tab':
-          component.on('click', this.tabHandler.bind(this));
+          component.on('mousedown', this.tabHandler.bind(this));
           break;
         case 'Delete':
-          component.on('click', this.deleteHandler.bind(this));
+          component.on('mousedown', this.deleteHandler.bind(this));
           break;
         case 'CapsLock':
-          component.on('click', this.capsLockHandler.bind(this, component));
+          component.on('mousedown', this.capsLockHandler.bind(this, component));
           break;
         case 'Enter':
-          component.on('click', this.enterHandler.bind(this));
+          component.on('mousedown', this.enterHandler.bind(this));
           break;
         case 'Space':
-          component.on('click', this.symbolHandler.bind(this, component));
+          component.on('mousedown', this.symbolHandler.bind(this, component));
           break;
         case 'Meta':
           component.on('click', () => console.log(component));
@@ -200,5 +208,146 @@ class KeyboardComponent extends Component {
       }
     });
   }
+
+  initializeKeydownEvent() {
+    window.addEventListener('keydown', (event) => {
+      event.preventDefault();
+      switch (event.code) {
+        case 'ShiftLeft':
+          if (event.repeat) return;
+          this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          break;
+        case 'ShiftRight':
+          if (event.repeat) return;
+          this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          break;
+        case 'AltLeft':
+          if (event.repeat) return;
+          this.keyComponents[event.code].press();
+          break;
+        case 'AltRight':
+          if (event.repeat) return;
+          this.keyComponents[event.code].press();
+          break;
+        case 'ControlLeft':
+          if (event.repeat) return;
+          this.keyComponents[event.code].press();
+          break;
+        case 'ControlRight':
+          if (event.repeat) return;
+          this.keyComponents[event.code].press();
+          break;
+        case 'Backspace':
+          this.backspaceHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'Tab':
+          this.tabHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'Delete':
+          this.deleteHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'CapsLock':
+          if (event.repeat) return;
+          this.capsLockHandler.call(this, ...[this.keyComponents[event.code]]);
+          break;
+        case 'Enter':
+          this.enterHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'Space':
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'Meta':
+          this.keyComponents[event.code].press();
+          break;
+        case 'ArrowLeft':
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'ArrowRight':
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'ArrowUp':
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        case 'ArrowDown':
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+        default:
+          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
+          break;
+      }
+    });
+  }
+
+  initializeKeyupEvents() {
+    window.addEventListener('keyup', (event) => {
+      event.preventDefault();
+      switch (event.code) {
+        case 'ShiftLeft':
+          this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          break;
+        case 'ShiftRight':
+          this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          break;
+        case 'AltLeft':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'AltRight':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ControlLeft':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ControlRight':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'Backspace':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'Tab':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'Delete':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'CapsLock':
+          break;
+        case 'Enter':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'Space':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'Meta':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ArrowLeft':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ArrowRight':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ArrowUp':
+          this.keyComponents[event.code].unpress();
+          break;
+        case 'ArrowDown':
+          this.keyComponents[event.code].unpress();
+          break;
+        default:
+          this.keyComponents[event.code].unpress();
+          break;
+      }
+    });
+  }
 }
+
 export default KeyboardComponent;
