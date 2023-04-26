@@ -134,6 +134,14 @@ class KeyboardComponent extends Component {
     this.textbox.setValue(component.current);
   }
 
+  backspaceHandler() {
+    this.textbox.clearLeft();
+  }
+
+  deleteHandler() {
+    this.textbox.clearRight();
+  }
+
   renderKeys() {
     this.keyComponents.forEach((component) => {
       component.toggleShift(this.state.shift, this.state.capsLock);
@@ -168,13 +176,13 @@ class KeyboardComponent extends Component {
           component.on('mouseup', this.ctrlHandler.bind(this, component));
           break;
         case 'Backspace':
-          component.on('click', () => console.log(component));
+          component.on('click', this.backspaceHandler.bind(this));
           break;
         case 'Tab':
           component.on('click', this.tabHandler.bind(this));
           break;
         case 'Delete':
-          component.on('click', () => console.log(component));
+          component.on('click', this.deleteHandler.bind(this));
           break;
         case 'CapsLock':
           component.on('click', this.capsLockHandler.bind(this, component));

@@ -16,6 +16,37 @@ class TextboxComponent extends Component {
     this.node.setSelectionRange(start + 1, start + 1);
   }
 
+  clearLeft() {
+    const start = this.node.selectionStart;
+    const end = this.node.selectionEnd;
+    const temp = this.value.split('');
+    const deleteCount = end - start !== 0 ? end - start : 1;
+    if (start === 0) return;
+    if (start !== end) {
+      temp.splice(start, deleteCount);
+      this.value = temp.join('');
+      this.renderValue();
+      this.node.setSelectionRange(start, start);
+    } else {
+      temp.splice(start - 1, deleteCount);
+      this.value = temp.join('');
+      this.renderValue();
+      this.node.setSelectionRange(start - 1, start - 1);
+    }
+  }
+
+  clearRight() {
+    const start = this.node.selectionStart;
+    const end = this.node.selectionEnd;
+    const value = this.value.split('');
+    const deleteCount = end - start !== 0 ? end - start : 1;
+    if (start === this.value.length) this.node.focus();
+    value.splice(start, deleteCount);
+    this.value = value.join('');
+    this.renderValue();
+    this.node.setSelectionRange(start, start);
+  }
+
   renderValue() {
     this.node.value = this.value;
   }
