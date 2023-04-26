@@ -8,8 +8,16 @@ class TextboxComponent extends Component {
   }
 
   setValue(value) {
-    this.value += value;
-    this.node.innerHTML = this.value;
+    const start = this.node.selectionStart;
+    const temp = this.value.split('');
+    temp.splice(start, 0, value);
+    this.value = temp.join('');
+    this.renderValue();
+    this.node.setSelectionRange(start + 1, start + 1);
+  }
+
+  renderValue() {
+    this.node.value = this.value;
   }
 
   initializeTextboxEvents() {
