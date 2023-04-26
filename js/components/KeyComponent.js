@@ -81,6 +81,16 @@ class KeyComponent extends Component {
     }
   }
 
+  press() {
+    this.pressed = true;
+    this.node.classList.add('key_pressed');
+  }
+
+  unpress() {
+    this.pressed = false;
+    this.node.classList.remove('key_pressed');
+  }
+
   setCurrentKey() {
     if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
       if (this.shifted) {
