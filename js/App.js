@@ -15,11 +15,18 @@ class App {
     const header = new HeaderComponent();
     const main = new MainComponent();
     const textboxWrapper = new TextboxWrapperComponent();
-    const textbox = new TextboxComponent();
+    this.textbox = new TextboxComponent();
     const keyboard = new KeyboardComponent();
-    keyboard.textbox = textbox;
-    wrapper.append(header, main.append(textboxWrapper.append(textbox), keyboard));
+    keyboard.textbox = this.textbox;
+    wrapper.append(header, main.append(textboxWrapper.append(this.textbox), keyboard));
     if (this.body !== null) this.body.append(wrapper.node);
+    this.initializeAppEvents();
+  }
+
+  initializeAppEvents() {
+    document.addEventListener('click', () => {
+      this.textbox.node.focus();
+    });
   }
 }
 
