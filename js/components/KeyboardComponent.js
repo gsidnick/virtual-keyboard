@@ -178,6 +178,7 @@ class KeyboardComponent extends Component {
         case 'ControlRight':
           break;
         case 'Backspace':
+          component.on('mousedown', this.backspaceHandler.bind(this));
           break;
         case 'Tab':
           break;
