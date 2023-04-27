@@ -21,7 +21,7 @@ class TextboxComponent extends Component {
     const end = this.node.selectionEnd;
     const temp = this.value.split('');
     const deleteCount = end - start !== 0 ? end - start : 1;
-    if (start === 0) return;
+    if (start === 0 && start === end) return;
     if (start !== end) {
       temp.splice(start, deleteCount);
       this.value = temp.join('');
