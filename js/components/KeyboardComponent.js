@@ -107,10 +107,9 @@ class KeyboardComponent extends Component {
     this.keyComponents[component.key.code] = component;
   }
 
-  shiftHandler(component) {
+  shiftHandler() {
     this.state.shift = !this.state.shift;
     this.renderKeys();
-    component.togglePress();
     console.log('Shift', this.state.shift);
   }
 
@@ -153,12 +152,12 @@ class KeyboardComponent extends Component {
       const component = this.keyComponents[key];
       switch (key) {
         case 'ShiftLeft':
-          component.on('mousedown', this.shiftHandler.bind(this, component));
-          component.on('mouseup', this.shiftHandler.bind(this, component));
+          component.on('mousedown', this.shiftHandler.bind(this));
+          component.on('mouseup', this.shiftHandler.bind(this));
           break;
         case 'ShiftRight':
-          component.on('mousedown', this.shiftHandler.bind(this, component));
-          component.on('mouseup', this.shiftHandler.bind(this, component));
+          component.on('mousedown', this.shiftHandler.bind(this));
+          component.on('mouseup', this.shiftHandler.bind(this));
           break;
         case 'AltLeft':
           component.on('click', () => console.log(component));
@@ -219,10 +218,12 @@ class KeyboardComponent extends Component {
         case 'ShiftLeft':
           if (event.repeat) return;
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
           break;
         case 'ShiftRight':
           if (event.repeat) return;
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].press();
           break;
         case 'AltLeft':
           if (event.repeat) return;
@@ -297,9 +298,11 @@ class KeyboardComponent extends Component {
       switch (event.code) {
         case 'ShiftLeft':
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].unpress();
           break;
         case 'ShiftRight':
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
+          this.keyComponents[event.code].unpress();
           break;
         case 'AltLeft':
           this.keyComponents[event.code].unpress();
