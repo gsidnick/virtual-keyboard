@@ -1,6 +1,7 @@
 import KeyComponent from './KeyComponent.js';
 import Component from './Component.js';
 import keysData from '../data/keys.js';
+import { getLocale, setLocale } from '../utils/storage.js';
 
 const EN = 'en';
 const RU = 'ru';
@@ -11,7 +12,7 @@ class KeyboardComponent extends Component {
     this.state = {
       shift: false,
       capsLock: false,
-      locale: EN,
+      locale: getLocale() ? getLocale() : EN,
     };
     this.textbox = null;
     this.keyComponents = {};
@@ -20,6 +21,7 @@ class KeyboardComponent extends Component {
     this.initializeKeysEvent();
     this.initializeKeydownEvent();
     this.initializeKeyupEvents();
+    setLocale(this.state.locale);
     window.addEventListener('load', () => {
       this.textbox.node.focus();
     });
@@ -44,7 +46,7 @@ class KeyboardComponent extends Component {
   renderRow1() {
     const keyboardRow1 = new Component('div', 'keyboard__row keyboard__row_1');
     const keys = this.keysData.row1.map((key) => {
-      const keyComponent = new KeyComponent(key);
+      const keyComponent = new KeyComponent(key, this.state.locale);
       this.addKeyComponent(keyComponent);
       return keyComponent;
     });
@@ -55,7 +57,7 @@ class KeyboardComponent extends Component {
   renderRow2() {
     const keyboardRow2 = new Component('div', 'keyboard__row keyboard__row_2');
     const keys = this.keysData.row2.map((key) => {
-      const keyComponent = new KeyComponent(key);
+      const keyComponent = new KeyComponent(key, this.state.locale);
       this.addKeyComponent(keyComponent);
       return keyComponent;
     });
@@ -66,7 +68,7 @@ class KeyboardComponent extends Component {
   renderRow3() {
     const keyboardRow3 = new Component('div', 'keyboard__row keyboard__row_3');
     const keys = this.keysData.row3.map((key) => {
-      const keyComponent = new KeyComponent(key);
+      const keyComponent = new KeyComponent(key, this.state.locale);
       this.addKeyComponent(keyComponent);
       return keyComponent;
     });
@@ -77,7 +79,7 @@ class KeyboardComponent extends Component {
   renderRow4() {
     const keyboardRow4 = new Component('div', 'keyboard__row keyboard__row_4');
     const keys = this.keysData.row4.map((key) => {
-      const keyComponent = new KeyComponent(key);
+      const keyComponent = new KeyComponent(key, this.state.locale);
       this.addKeyComponent(keyComponent);
       return keyComponent;
     });
@@ -88,15 +90,15 @@ class KeyboardComponent extends Component {
   renderRow5() {
     const keyboardRow5 = new Component('div', 'keyboard__row keyboard__row_5');
     const keys = this.keysData.row5.slice(0, -4).map((key) => {
-      const keyComponent = new KeyComponent(key);
+      const keyComponent = new KeyComponent(key, this.state.locale);
       this.addKeyComponent(keyComponent);
       return keyComponent;
     });
     const arrows = this.keysData.row5.slice(-4);
-    const arrowLeft = new KeyComponent(arrows[0]);
-    const arrowUp = new KeyComponent(arrows[1]);
-    const arrowDown = new KeyComponent(arrows[2]);
-    const arrowRight = new KeyComponent(arrows[3]);
+    const arrowLeft = new KeyComponent(arrows[0], this.state.locale);
+    const arrowUp = new KeyComponent(arrows[1], this.state.locale);
+    const arrowDown = new KeyComponent(arrows[2], this.state.locale);
+    const arrowRight = new KeyComponent(arrows[3], this.state.locale);
     this.keyComponents[arrowLeft.key.code] = arrowLeft;
     this.keyComponents[arrowUp.key.code] = arrowUp;
     this.keyComponents[arrowDown.key.code] = arrowDown;
@@ -219,8 +221,10 @@ class KeyboardComponent extends Component {
     window.addEventListener('keydown', (event) => {
       event.preventDefault();
       if (event.altKey && event.ctrlKey) {
+        if (event.repeat) return;
         this.toggleLocale();
         this.renderKeys();
+        setLocale(this.state.locale);
       }
       switch (event.code) {
         case 'ShiftLeft':

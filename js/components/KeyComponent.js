@@ -2,14 +2,14 @@ import Component from './Component.js';
 import { isLetterKey, isSpecialKey, isSymbolKey } from '../utils/check.js';
 
 class KeyComponent extends Component {
-  constructor(key) {
+  constructor(key, locale) {
     super('button', 'key');
     this.current = null;
     this.key = null;
     this.capsed = false;
     this.shifted = false;
     this.pressed = false;
-    this.locale = 'en';
+    this.locale = locale;
     this.create(key);
   }
 
