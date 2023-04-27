@@ -1,9 +1,6 @@
 import Component from './Component.js';
 import { isLetterKey, isSpecialKey, isSymbolKey } from '../utils/check.js';
 
-const EN = 'en';
-const RU = 'ru';
-
 class KeyComponent extends Component {
   constructor(key) {
     super('button', 'key');
@@ -12,7 +9,7 @@ class KeyComponent extends Component {
     this.capsed = false;
     this.shifted = false;
     this.pressed = false;
-    this.locale = EN;
+    this.locale = 'en';
     this.create(key);
   }
 
@@ -34,9 +31,10 @@ class KeyComponent extends Component {
     this.setCurrentKey();
   }
 
-  toggleShift(shift, capsLock) {
+  toggleShift(shift, capsLock, locale) {
     this.shifted = shift;
     this.capsed = capsLock;
+    this.locale = locale;
     this.toggleShiftStyle();
     this.toggleShiftKey();
     this.setCurrentKey();
@@ -52,6 +50,7 @@ class KeyComponent extends Component {
 
   toggleShiftKey() {
     if (isLetterKey(this.locale, this.key[this.locale].keyBase)) {
+      this.node.innerHTML = '';
       if (this.shifted) {
         if (this.capsed) {
           this.node.innerHTML = this.key[this.locale].keyBase;
@@ -65,6 +64,13 @@ class KeyComponent extends Component {
           this.node.innerHTML = this.key[this.locale].keyBase;
         }
       }
+    }
+    if (isSymbolKey(this.locale, this.key[this.locale].keyBase)
+      && !isSpecialKey(this.key[this.locale].keyShift)) {
+      this.node.innerHTML = '';
+      const keyShiftComponent = new Component('span', 'key__shift', this.key[this.locale].keyShift);
+      const keyBaseComponent = new Component('span', 'key__base', this.key[this.locale].keyBase);
+      this.append(keyShiftComponent, keyBaseComponent);
     }
   }
 

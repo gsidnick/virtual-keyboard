@@ -2,12 +2,16 @@ import KeyComponent from './KeyComponent.js';
 import Component from './Component.js';
 import keysData from '../data/keys.js';
 
+const EN = 'en';
+const RU = 'ru';
+
 class KeyboardComponent extends Component {
   constructor() {
     super('section', 'keyboard');
     this.state = {
       shift: false,
       capsLock: false,
+      locale: EN,
     };
     this.textbox = null;
     this.keyComponents = {};
@@ -141,8 +145,16 @@ class KeyboardComponent extends Component {
   renderKeys() {
     Object.keys(this.keyComponents).forEach((key) => {
       const component = this.keyComponents[key];
-      component.toggleShift(this.state.shift, this.state.capsLock);
+      component.toggleShift(this.state.shift, this.state.capsLock, this.state.locale);
     });
+  }
+
+  toggleLocale() {
+    if (this.state.locale === EN) {
+      this.state.locale = RU;
+    } else {
+      this.state.locale = EN;
+    }
   }
 
   initializeKeysEvent() {
@@ -205,6 +217,10 @@ class KeyboardComponent extends Component {
   initializeKeydownEvent() {
     window.addEventListener('keydown', (event) => {
       event.preventDefault();
+      if (event.altKey && event.ctrlKey) {
+        this.toggleLocale();
+        this.renderKeys();
+      }
       switch (event.code) {
         case 'ShiftLeft':
           if (event.repeat) return;
