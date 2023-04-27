@@ -16,6 +16,9 @@ class KeyboardComponent extends Component {
     this.initializeKeysEvent();
     this.initializeKeydownEvent();
     this.initializeKeyupEvents();
+    window.addEventListener('load', () => {
+      this.textbox.node.focus();
+    });
     window.addEventListener('blur', () => {
       Object.keys(this.keyComponents).forEach((key) => {
         this.keyComponents[key].unpress();
