@@ -110,14 +110,12 @@ class KeyboardComponent extends Component {
   shiftHandler() {
     this.state.shift = !this.state.shift;
     this.renderKeys();
-    console.log('Shift', this.state.shift);
   }
 
   capsLockHandler(component) {
     this.state.capsLock = !this.state.capsLock;
     this.renderKeys();
     component.togglePress();
-    console.log('Caps Lock', this.state.capsLock);
   }
 
   tabHandler() {
@@ -160,22 +158,16 @@ class KeyboardComponent extends Component {
           component.on('mouseup', this.shiftHandler.bind(this));
           break;
         case 'AltLeft':
-          component.on('click', () => console.log(component));
           break;
         case 'AltRight':
-          component.on('click', () => console.log(component));
           break;
         case 'ControlLeft':
-          component.on('click', () => console.log(component));
           break;
         case 'ControlRight':
-          component.on('click', () => console.log(component));
           break;
         case 'Backspace':
-          component.on('mousedown', this.backspaceHandler.bind(this));
           break;
         case 'Tab':
-          component.on('mousedown', this.tabHandler.bind(this));
           break;
         case 'Delete':
           component.on('mousedown', this.deleteHandler.bind(this));
@@ -190,7 +182,6 @@ class KeyboardComponent extends Component {
           component.on('mousedown', this.symbolHandler.bind(this, component));
           break;
         case 'Meta':
-          component.on('click', () => console.log(component));
           break;
         case 'ArrowLeft':
           component.on('click', this.symbolHandler.bind(this, component));
