@@ -25,12 +25,12 @@
   background-color: var(--color-key-hovered-background);
 }
 
-.key:active,
 .key_pressed {
   box-shadow: 0 0 0 0 transparent;
   transform: translateY(1px);
 }
 
+.key:active,
 .key_pressed {
   color: var(--color-key-pressed-text);
   background-color: var(--color-key-pressed-background);
