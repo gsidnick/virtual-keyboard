@@ -273,27 +273,7 @@ class KeyboardComponent extends Component {
           this.enterHandler.call(this, ...[this.keyComponents[event.code]]);
           this.keyComponents[event.code].press();
           break;
-        case 'Space':
-          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
-          this.keyComponents[event.code].press();
-          break;
         case 'Meta':
-          this.keyComponents[event.code].press();
-          break;
-        case 'ArrowLeft':
-          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
-          this.keyComponents[event.code].press();
-          break;
-        case 'ArrowRight':
-          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
-          this.keyComponents[event.code].press();
-          break;
-        case 'ArrowUp':
-          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
-          this.keyComponents[event.code].press();
-          break;
-        case 'ArrowDown':
-          this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
           this.keyComponents[event.code].press();
           break;
         default:
@@ -316,49 +296,7 @@ class KeyboardComponent extends Component {
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
           this.keyComponents[event.code].unpress();
           break;
-        case 'AltLeft':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'AltRight':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ControlLeft':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ControlRight':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'Backspace':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'Tab':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'Delete':
-          this.keyComponents[event.code].unpress();
-          break;
         case 'CapsLock':
-          break;
-        case 'Enter':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'Space':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'Meta':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ArrowLeft':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ArrowRight':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ArrowUp':
-          this.keyComponents[event.code].unpress();
-          break;
-        case 'ArrowDown':
-          this.keyComponents[event.code].unpress();
           break;
         default:
           this.keyComponents[event.code].unpress();
