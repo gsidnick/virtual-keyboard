@@ -277,6 +277,7 @@ class KeyboardComponent extends Component {
           this.keyComponents[event.code].press();
           break;
         default:
+          if (!this.keyComponents[event.code]) return;
           this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
           this.keyComponents[event.code].press();
           break;
@@ -299,6 +300,7 @@ class KeyboardComponent extends Component {
         case 'CapsLock':
           break;
         default:
+          if (!this.keyComponents[event.code]) return;
           this.keyComponents[event.code].unpress();
           break;
       }
