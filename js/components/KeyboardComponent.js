@@ -276,6 +276,9 @@ class KeyboardComponent extends Component {
         case 'Meta':
           this.keyComponents[event.code].press();
           break;
+        case 'F5':
+          window.location.reload();
+          break;
         default:
           if (!this.keyComponents[event.code]) return;
           this.symbolHandler.call(this, ...[this.keyComponents[event.code]]);
