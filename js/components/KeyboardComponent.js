@@ -231,6 +231,7 @@ class KeyboardComponent extends Component {
         this.textbox.node.setSelectionRange(0, this.textbox.value.length);
         return;
       }
+      if (event.key === 'AltGraph') this.keyComponents.ControlLeft.unpress();
       switch (event.code) {
         case 'ShiftLeft':
           if (event.repeat) return;
@@ -296,6 +297,8 @@ class KeyboardComponent extends Component {
   initializeKeyupEvents() {
     window.addEventListener('keyup', (event) => {
       event.preventDefault();
+      if (event.code === 'ShiftLeft') this.keyComponents.ShiftRight.unpress();
+      if (event.code === 'ShiftRight') this.keyComponents.ShiftLeft.unpress();
       switch (event.code) {
         case 'ShiftLeft':
           this.shiftHandler.call(this, ...[this.keyComponents[event.code]]);
