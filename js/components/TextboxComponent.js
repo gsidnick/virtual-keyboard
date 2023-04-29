@@ -9,8 +9,14 @@ class TextboxComponent extends Component {
 
   setValue(value) {
     const start = this.node.selectionStart;
+    const end = this.node.selectionEnd;
+    const deleteCount = end - start !== 0 ? end - start : 1;
     const temp = this.value.split('');
-    temp.splice(start, 0, value);
+    if (start === end) {
+      temp.splice(start, 0, value);
+    } else {
+      temp.splice(start, deleteCount, value);
+    }
     this.value = temp.join('');
     this.renderValue();
     this.node.setSelectionRange(start + 1, start + 1);
