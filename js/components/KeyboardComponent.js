@@ -183,6 +183,7 @@ class KeyboardComponent extends Component {
           component.on('mousedown', this.backspaceHandler.bind(this));
           break;
         case 'Tab':
+          component.on('mousedown', this.tabHandler.bind(this));
           break;
         case 'Delete':
           component.on('mousedown', this.deleteHandler.bind(this));
