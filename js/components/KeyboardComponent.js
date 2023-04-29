@@ -226,6 +226,11 @@ class KeyboardComponent extends Component {
         this.renderKeys();
         setLocale(this.state.locale);
       }
+      if (event.ctrlKey && event.code === 'KeyA') {
+        this.keyComponents.KeyA.press();
+        this.textbox.node.setSelectionRange(0, this.textbox.value.length);
+        return;
+      }
       switch (event.code) {
         case 'ShiftLeft':
           if (event.repeat) return;
