@@ -1,0 +1,13 @@
+:root {
+  --color-body-background: #ffffff;
+  --color-textbox-border: #dfdfdf;
+  --color-keyboard-background: #f3f3f3;
+  --color-key-normal-background: #ffffff;
+  --color-key-normal-text: #333333;
+  --color-key-hovered-background: #89eeb1;
+  --color-key-hovered-text: #333333;
+  --color-key-pressed-background: #0ec058;
+  --color-key-pressed-text: #ffffff;
+  --color-key-pressed-hover-background: #23da6f;
+  --color-key-unshifted-text: #dfdfdf;
+}
